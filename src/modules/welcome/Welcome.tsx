@@ -1,8 +1,14 @@
 import React from 'react'
 import {Image, StyleSheet, View} from "react-native";
 import logo_main from "../../assets/icon_main_logo.png";
+import {NavigationProp, useNavigation} from "@react-navigation/native";
 
 const Welcome = () => {
+    const navigation = useNavigation<NavigationProp<any>>();
+
+    setTimeout(() => {
+        navigation.navigate('Login')
+    }, 3000);
     return (
         <View style={styles.root}>
             <Image
