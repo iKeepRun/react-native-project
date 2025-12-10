@@ -5,28 +5,39 @@
  * @format
  */
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator  } from '@react-navigation/native-stack';
+import Welcome from './src/modules/welcome/Welcome.tsx';
+import Login from './src/modules/login/Login.tsx';
 
-import {StatusBar, Text, useColorScheme, View} from 'react-native';
-import {
-  SafeAreaProvider,
-} from 'react-native-safe-area-context';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const Stack = createNativeStackNavigator();
+
+  function RootStack() {
+    return (
+      <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    );
+  }
 
   return (
-    <SafeAreaProvider>
-        <View className="flex flex-row justify-center m-auto items-center w-[100px] h-[100px] bg-red-500">
-            <Text>hello world</Text>
-        </View>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <RootStack />
+    </NavigationContainer>
   );
 }
-
-
-
-
 
 export default App;
