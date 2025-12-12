@@ -11,16 +11,18 @@ import logo_main from '../../assets/icon_main_logo.png';
 import arrow_btn from '../../assets/icon_arrow.png';
 import select_btn from '../../assets/icon_selected.png';
 import unselect_btn from '../../assets/icon_unselected.png';
+import  wechat_icon from '../../assets/icon_wx_small.png';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [read, setRead] = useState(false);
-
+ const navigation = useNavigation<NavigationProp<any>>();
   return (
     <View style={styles.login}>
       <View
         style={{
           flexDirection: 'row',
-          marginTop:200
+          marginTop: 80,
         }}
       >
         <TouchableOpacity onPress={() => setRead(!read)}>
@@ -46,7 +48,10 @@ const Login = () => {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: 20,
+          paddingHorizontal: 10,
+          paddingVertical: 20,
         }}
+      onPress={() => {navigation.navigate('OtherLogin')}}
       >
         <Text style={{ fontSize: 16 }}>其他登录方式</Text>
         <Image
@@ -60,16 +65,13 @@ const Login = () => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity>
-        <View style={styles.phoneLogin}>
-          <Text style={{ color: '#fff' }}> 手机号登录</Text>
-        </View>
+      <TouchableOpacity style={styles.wechatLogin} activeOpacity={0.7}>
+          <Image source={wechat_icon}  style={{ width: 38, height: 38 }}/>
+          <Text style={{ color: '#fff' , fontSize: 18}}> 微信登录</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
-        <View style={styles.wechatLogin}>
-          <Text style={{ color: '#fff' }}> 一键微信登录</Text>
-        </View>
+      <TouchableOpacity style={styles.oneLogin} activeOpacity={0.7}>
+          <Text style={{ color: '#fff' ,fontSize: 18}}> 一键登录</Text>
       </TouchableOpacity>
 
       <Image source={logo_main} style={{ width: 230, height: 120 }} />
@@ -82,29 +84,31 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     paddingBottom: 40,
-    // justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 56,
     flexDirection: 'column-reverse',
-    // marginTop:5,
   },
   wechatLogin: {
-    backgroundColor: '#00c800',
-    width: 200,
-    height: 40,
+    backgroundColor: '#05c160',
+    width: '100%',
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    marginTop: 180,
-  },
-  phoneLogin: {
-    backgroundColor: '#02efee',
-    width: 200,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 28,
     marginTop: 20,
+    display: 'flex',
+    flexDirection: 'row',
+
+  },
+  oneLogin: {
+    backgroundColor: '#eb0638',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 28,
+    marginTop: 300
+
   },
 });
 

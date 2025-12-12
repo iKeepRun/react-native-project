@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator  } from '@react-navigation/native-stack';
 import Welcome from './src/modules/welcome/Welcome.tsx';
 import Login from './src/modules/login/Login.tsx';
+import OtherLogin from './src/modules/login/OtherLogin.tsx';
 
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="OtherLogin"
+          component={OtherLogin}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
