@@ -6,17 +6,18 @@ import {
   Text,
   TouchableOpacity,
   View,
+  LayoutAnimation,
 } from 'react-native';
 import logo_main from '../../assets/icon_main_logo.png';
 import arrow_btn from '../../assets/icon_arrow.png';
 import select_btn from '../../assets/icon_selected.png';
 import unselect_btn from '../../assets/icon_unselected.png';
-import  wechat_icon from '../../assets/icon_wx_small.png';
+import wechat_icon from '../../assets/icon_wx_small.png';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [read, setRead] = useState(false);
- const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<NavigationProp<any>>();
   return (
     <View style={styles.login}>
       <View
@@ -51,9 +52,12 @@ const Login = () => {
           paddingHorizontal: 10,
           paddingVertical: 20,
         }}
-      onPress={() => {navigation.navigate('OtherLogin')}}
+        onPress={() => {
+          LayoutAnimation.easeInEaseOut()
+          navigation.navigate('OtherLogin');
+        }}
       >
-        <Text style={{ fontSize: 16 }}>其他登录方式</Text>
+        <Text style={{ fontSize: 16 }}  >其他登录方式</Text>
         <Image
           source={arrow_btn}
           style={{
@@ -66,12 +70,12 @@ const Login = () => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.wechatLogin} activeOpacity={0.7}>
-          <Image source={wechat_icon}  style={{ width: 38, height: 38 }}/>
-          <Text style={{ color: '#fff' , fontSize: 18}}> 微信登录</Text>
+        <Image source={wechat_icon} style={{ width: 38, height: 38 }} />
+        <Text style={{ color: '#fff', fontSize: 18 }}> 微信登录</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.oneLogin} activeOpacity={0.7}>
-          <Text style={{ color: '#fff' ,fontSize: 18}}> 一键登录</Text>
+        <Text style={{ color: '#fff', fontSize: 18 }}> 一键登录</Text>
       </TouchableOpacity>
 
       <Image source={logo_main} style={{ width: 230, height: 120 }} />
@@ -98,7 +102,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     display: 'flex',
     flexDirection: 'row',
-
   },
   oneLogin: {
     backgroundColor: '#eb0638',
@@ -107,8 +110,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 28,
-    marginTop: 300
-
+    marginTop: 300,
   },
 });
 

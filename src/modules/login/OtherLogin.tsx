@@ -7,6 +7,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  LayoutAnimation
+
 } from 'react-native';
 // import { Picker } from '@react-native-picker/picker';
 import { Picker } from '@react-native-picker/picker';
@@ -16,6 +18,7 @@ import eye_open_icon from '../../assets/icon_eye_open.png';
 import eye_close_icon from '../../assets/icon_eye_close.png';
 import icon_exchange from '../../assets/icon_exchange.png';
 import icon_wechat from '../../assets/icon_wx.png';
+import icon_qq from '../../assets/icon_qq.webp';
 
 
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -31,7 +34,9 @@ const OtherLogin = () => {
     <View style={styles.otherLoginPage}>
       <TouchableOpacity
         style={styles.closeIcon}
-        onPress={() => navigation.goBack()}
+        onPress={() => {navigation.goBack()
+          LayoutAnimation.easeInEaseOut()
+        }}
       >
         <Image source={close_icon} style={{ width: 40, height: 40 }} />
       </TouchableOpacity>
@@ -161,7 +166,7 @@ const OtherLogin = () => {
 
       <View style={{marginTop: 50, flexDirection: 'row',}}>
         <Image source={icon_wechat} style={{ width: 56, height: 56 ,marginRight:50}} />
-        <Image source={icon_wechat} style={{ width: 56, height: 56 ,marginLeft:50}} />
+        <Image source={icon_qq} style={{ width: 56, height: 56 ,marginLeft:50}} />
       </View>
     </View>
   );
@@ -177,7 +182,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
 
-    borderWidth: 10,
   },
   closeIcon: {
     position: 'absolute',
