@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   View,
   LayoutAnimation
-
 } from 'react-native';
-// import { Picker } from '@react-native-picker/picker';
 import { Picker } from '@react-native-picker/picker';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import close_icon from '../../assets/icon_close_modal.png';
 import eye_open_icon from '../../assets/icon_eye_open.png';
@@ -19,19 +18,23 @@ import eye_close_icon from '../../assets/icon_eye_close.png';
 import icon_exchange from '../../assets/icon_exchange.png';
 import icon_wechat from '../../assets/icon_wx.png';
 import icon_qq from '../../assets/icon_qq.webp';
-
-
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import select_btn from '../../assets/icon_selected.png';
 import unselect_btn from '../../assets/icon_unselected.png';
+import select_btn from '../../assets/icon_selected.png';
+import { FormatePhone, recoverPhone } from '../../utils/FormatePhone.ts';
 
 const OtherLogin = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const [selectedValue, setSelectedValue] = useState('86');
   const [isEyeOpen, setIsEyeOpen] = useState(false);
   const [read, setRead] = useState(false);
+  const [phone, setPhone] = useState('13');
+  const [password, setPassword] = useState('')
+  const [showPsw, setShowPsw] = useState(false);
+
+  const canLogin= phone.length === 13 &&password!=='' && read ;
   return (
     <View style={styles.otherLoginPage}>
+      <Text style={{marginTop: 25,fontSize: 20, color: '#000'}}>{phone}</Text>
       <TouchableOpacity
         style={styles.closeIcon}
         onPress={() => {navigation.goBack()
@@ -67,6 +70,11 @@ const OtherLogin = () => {
             marginLeft: 5,
             flex: 1,
           }}
+          keyboardType={'phone-pad'}
+          textContentType={'telephoneNumber'}
+          maxLength={13}
+          value={phone}
+          onChangeText={text => setPhone(FormatePhone(text))}
         />
       </View>
 
@@ -85,9 +93,17 @@ const OtherLogin = () => {
           placeholder="输入密码"
           placeholderTextColor={'#cbcbcb'}
           style={{ fontSize: 20 }}
+          textContentType={'password'}
+          maxLength={6}
+          secureTextEntry={!showPsw}
+          value={password}
+          onChangeText={text => setPassword(text)}
         />
 
-        <TouchableOpacity onPress={() => setIsEyeOpen(!isEyeOpen)}>
+        <TouchableOpacity onPress={() => {
+          setIsEyeOpen(!isEyeOpen)
+          setShowPsw(!showPsw)
+        }}>
           <Image
             source={isEyeOpen ? eye_open_icon : eye_close_icon}
             style={{ width: 20, height: 20 }}
@@ -124,14 +140,24 @@ const OtherLogin = () => {
           width: '100%',
           height: 56,
           display: 'flex',
-          backgroundColor: '#fd2139',
+          backgroundColor: canLogin?'#fd2139':'#c5c5c5',
           borderRadius: 28,
           alignItems: 'center',
           justifyContent: 'center',
 
           marginTop: 25,
+
         }}
-        activeOpacity={0.7}
+        activeOpacity={canLogin?0.7:1}
+
+        onPress={() => {
+          const originPhone = recoverPhone(phone);
+          console.log('originPhone', originPhone);
+          if (!canLogin) {
+            return
+          }
+          navigation.navigate('HomeTab');
+        }}
       >
         <Text style={{ fontSize: 18, color: '#fff' }}>登录</Text>
       </TouchableOpacity>
@@ -158,7 +184,9 @@ const OtherLogin = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={{ marginLeft:-16}}>
+      <TouchableOpacity style={{ marginLeft:-16}}
+
+      >
         <Text style={{  fontSize: 14 }}>《儿童/青少年个人数据保护指引》</Text>
       </TouchableOpacity>
 
@@ -170,7 +198,7 @@ const OtherLogin = () => {
       </View>
     </View>
   );
-};
+};  //完善其他登录页的功能
 
 const styles = StyleSheet.create({
   otherLoginPage: {
