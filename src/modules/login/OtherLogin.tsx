@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
-  Image,
-  Linking,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  LayoutAnimation,
+    Image,
+    Linking,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    LayoutAnimation, Platform,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -51,7 +51,6 @@ const OtherLogin = () => {
   return (
     <View style={styles.otherLoginPage}>
       <Text style={{ marginTop: 25, fontSize: 20, color: '#000' }}>
-        {phone}
       </Text>
       <TouchableOpacity
         style={styles.closeIcon}
@@ -70,24 +69,37 @@ const OtherLogin = () => {
       </Text>
 
       <View style={styles.phoneInput}>
-        <Picker
-          selectedValue={selectedValue}
-          style={{ width: 100, height: 60, fontSize: 20 }}
-          onValueChange={itemValue => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="+86" value="86" />
-          <Picker.Item label="+1" value="1" />
-          <Picker.Item label="+81" value="81" />
-        </Picker>
+          {Platform.OS === 'ios' ? (
+              <TouchableOpacity
+                  style={{ display:'flex',width: 60, height: 60, alignItems:'center',justifyContent:'center'}}
+                  onPress={() => {/* 弹出自定义的选择器或 ActionSheet */}}
+              >
+                  <Text style={{ fontSize: 20 }}>+{selectedValue}</Text>
+              </TouchableOpacity>
+          ):( <Picker
+              selectedValue={selectedValue}
+              // style={{ width: 100, height: 60, fontSize: 20 }}
+              onValueChange={itemValue => setSelectedValue(itemValue)}
+
+          >
+              <Picker.Item label="+86" value="86" />
+              <Picker.Item label="+1" value="1" />
+              <Picker.Item label="+81" value="81" />
+          </Picker>)
+          }
+
         <TextInput
           placeholder="请输入手机号码"
           placeholderTextColor={'#cbcbcb'}
           style={{
             fontSize: 20,
             height: 60,
-            lineHeight: 40,
+            // lineHeight: 30,
             marginLeft: 5,
             flex: 1,
+              // backgroundColor:'green'
+              // borderBottomWidth: 1,
+              // borderBottomColor: '#cbcbcb',
           }}
           keyboardType={'phone-pad'}
           textContentType={'telephoneNumber'}
@@ -103,18 +115,21 @@ const OtherLogin = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
-          marginTop: 8,
+            height:50,
+          marginTop: 20,
           borderBottomWidth: 1,
           borderBottomColor: '#cbcbcb',
+
         }}
       >
         <TextInput
           placeholder="输入密码"
           placeholderTextColor={'#cbcbcb'}
-          style={{ fontSize: 20 }}
+          style={{ fontSize: 20 ,padding:0,height:'100%',flex:1}}
           textContentType={'password'}
           maxLength={6}
           secureTextEntry={!showPsw}
+
           value={password}
           onChangeText={text => setPassword(text)}
         />
