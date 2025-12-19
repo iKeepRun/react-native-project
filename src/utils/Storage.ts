@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const safe=async (key :string,value:string)=>{
+const save=async (key :string,value:string)=>{
     try {
         return await  AsyncStorage.setItem(key,value)
     }catch (e) {
@@ -28,7 +28,7 @@ const get=async (key:string)=>{
 
 
 const Storage={
-    safe,
+    save,
    remove,
     get
 

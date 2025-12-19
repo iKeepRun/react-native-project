@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import {Image, StyleSheet, View} from "react-native";
 import logo_main from "../../assets/icon_main_logo.png";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
+import storage from '../../utils/Storage.ts';
 
 const Welcome = () => {
     const navigation = useNavigation<NavigationProp<any>>();
+    useEffect(()=>{
+      const timer=setTimeout(() => {
+        storage.get('userInfo').then(res=>{
+          console.log("获取用户信息：",res)
+          if(res){
+            navigation.navigate('HomeTab')
+          }else {
+            navigation.navigate('Login')
+          }
+        })
+      }, 3000);
 
-    setTimeout(() => {
-        navigation.navigate('Login')
-    }, 3000);
+      //清理定时器
+      return ()=>clearTimeout( timer)
+    },[navigation])
+
     return (
         <View style={styles.root}>
             <Image
