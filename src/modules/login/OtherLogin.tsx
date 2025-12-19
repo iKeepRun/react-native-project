@@ -21,7 +21,7 @@ import icon_qq from '../../assets/icon_qq.webp';
 import unselect_btn from '../../assets/icon_unselected.png';
 import select_btn from '../../assets/icon_selected.png';
 import { FormatePhone, recoverPhone } from '../../utils/FormatePhone.ts';
-import { get } from '../../utils/request.ts';
+import { request } from '../../utils/request.ts';
 
 const OtherLogin = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -40,18 +40,17 @@ const OtherLogin = () => {
     if (!canLogin) {
       return;
     }
-    const res = await get('/user/login', {
+    const { data } = await request('login', {
       name: originPhone,
       pwd: password,
     });
-    console.log('res', JSON.stringify(res));
+    console.log('res', JSON.stringify(data));
     // navigation.navigate('HomeTab');
   }
 
   return (
     <View style={styles.otherLoginPage}>
       <Text style={{ marginTop: 25, fontSize: 20, color: '#000' }}>
-        {phone}
       </Text>
       <TouchableOpacity
         style={styles.closeIcon}
@@ -74,6 +73,7 @@ const OtherLogin = () => {
           selectedValue={selectedValue}
           style={{ width: 100, height: 60, fontSize: 20 }}
           onValueChange={itemValue => setSelectedValue(itemValue)}
+          // mode="dropdown"
         >
           <Picker.Item label="+86" value="86" />
           <Picker.Item label="+1" value="1" />
