@@ -7,6 +7,7 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator  } from '@react-navigation/native-stack';
+// import { createStackNavigator  } from '@react-navigation/stack';
 import Welcome from './src/modules/welcome/Welcome.tsx';
 import Login from './src/modules/login/Login.tsx';
 import OtherLogin from './src/modules/login/OtherLogin.tsx';
@@ -15,6 +16,7 @@ import HomeTab from './src/modules/home/HomeTab.tsx';
 
 function App() {
   const Stack = createNativeStackNavigator();
+  // const Stack = createStackNavigator();
 
   function RootStack() {
     return (

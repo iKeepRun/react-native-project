@@ -7,11 +7,13 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  LayoutAnimation,
+  LayoutAnimation
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-
+import {  useNavigation } from '@react-navigation/native';
+// import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import Toast   from 'react-native-simple-toast';
 import close_icon from '../../assets/icon_close_modal.png';
 import eye_open_icon from '../../assets/icon_eye_open.png';
 import eye_close_icon from '../../assets/icon_eye_close.png';
@@ -21,10 +23,10 @@ import icon_qq from '../../assets/icon_qq.webp';
 import unselect_btn from '../../assets/icon_unselected.png';
 import select_btn from '../../assets/icon_selected.png';
 import { FormatePhone, recoverPhone } from '../../utils/FormatePhone.ts';
-import { request } from '../../utils/request.ts';
+import UserStore from '../../stores/UserStore.ts';
 
 const OtherLogin = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<StackNavigationProp<any>>();
   const [selectedValue, setSelectedValue] = useState('86');
   const [isEyeOpen, setIsEyeOpen] = useState(false);
   const [read, setRead] = useState(false);
@@ -36,16 +38,20 @@ const OtherLogin = () => {
 
   const loginPress = async () => {
     const originPhone = recoverPhone(phone);
-    // console.log('originPhone', originPhone);
+
     if (!canLogin) {
       return;
     }
-    const { data } = await request('login', {
-      name: originPhone,
-      pwd: password,
-    });
-    console.log('res', JSON.stringify(data));
-    // navigation.navigate('HomeTab');
+
+
+    UserStore.getUserInfo(originPhone,password, (success) => {
+      if(success){
+        navigation.replace('HomeTab');
+      }else {
+        Toast.show("登录失败,请检查账号密码是否正确", Toast.SHORT);
+      }
+    })
+
   }
 
   return (
